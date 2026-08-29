@@ -319,14 +319,6 @@ def fit_auto_weight_model(history_rows, ridge_alpha=1.0):
 
     Input features:
       cpu_util, gpu_util, throughput, memory_headroom, time
-
-    Target:
-      observed_speed = samples_per_sec_total
-
-    Method:
-      Ridge regression using numpy.
-      The absolute value of each learned coefficient is converted into a visible weight.
-      Positive or negative coefficient direction is still kept internally for prediction.
     """
 
     if len(history_rows) < 3:
@@ -404,7 +396,6 @@ def fit_auto_weight_model(history_rows, ridge_alpha=1.0):
 def predict_speed_from_model(model, feature_row):
     """
     Predict worker speed from learned model.
-    Then blend predicted speed with actual observed speed for stability.
     """
 
     coef = np.array([model["coef"][f] for f in FEATURES], dtype=float)
@@ -437,13 +428,6 @@ def compute_next_ratios(
 ):
     """
     Convert learned feature model into data allocation ratios.
-
-    Basic rule:
-      estimated_speed_i high -> worker i receives more data
-
-    Because equal completion time means:
-      data_i / speed_i should be similar across workers
-      therefore data_i should be proportional to speed_i
     """
 
     speed_by_worker = {}
