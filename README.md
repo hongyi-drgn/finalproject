@@ -22,7 +22,7 @@ the **.png is the result visual
 
 2.Then on your worker machine:
 cd ~/your files
-source ~/<your_python_virtual_environment>/bin/activate
+source ~/your_python_virtual_environment/bin/activate
 
 unset CPU_LIMIT
 export WORKER_ROOT=~/dist_resnet_worker
@@ -37,6 +37,7 @@ source ~/<your_python_virtual_environment>/bin/activate
 
 python coordinator_manual_weight.py \
   --data-root (The actual path where the Tiny ImageNet-200 training set is located on the computer) \
+  **((such as --data-root /uolstore/home/users/drgn0194/Downloads/tiny-imagenet-200/train \))**
   --workers B=http://ip:8000 C=http://ip:8000 D=http://ip:8000 \
   --profile-csv ./adaptive_auto_work_gpu/adaptive_auto_metrics.csv \
   --profile-round latest \
